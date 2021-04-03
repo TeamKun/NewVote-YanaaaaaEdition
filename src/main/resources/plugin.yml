@@ -5,6 +5,8 @@ api-version: 1.15
 commands:
   v:
     permission: newvote.v
+  yvote:
+    permission: newvote.v
   vs:
     permission: newvote.vs
   vget:

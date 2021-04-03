@@ -39,7 +39,7 @@ public class ScoreBoardLogic {
     static void setVoteResult(String sender,String receiver){
         Bukkit.getOnlinePlayers().forEach(player -> {
             if(player.getName().equals(sender)) {
-                if(NewVote.YanaGet&&receiver.equals("Yanaaaaa")){
+                if(NewVote.YanaGet&&receiver.equals("Yanaaaaa")&&NewVote.Yvote){
                     player.setPlayerListName(player.getName() + " : " + ChatColor.MAGIC + "????????");
                 }else {
                     player.setPlayerListName(player.getName() + " : " + ChatColor.AQUA + receiver);

@@ -21,6 +21,7 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
         saveConfig();
         this.getCommand("v").setExecutor(this);
         this.getCommand("v").setTabCompleter(this);
+        this.getCommand("yvote").setExecutor(this);
         this.getCommand("vs").setExecutor(this);
         this.getCommand("vget").setExecutor(this);
         getServer().getLogger().info(ChatColor.AQUA+"NewVotePlugin by Yanaaaaa");
@@ -34,7 +35,7 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
     //List=投票先のリスト
     static List<String> List = new ArrayList<>();
     public boolean Yana = false;
-    static boolean YanaGet=false;
+    static boolean YanaGet=false,Yvote=true;
     public int Yanum ;
 
     @Override
@@ -82,6 +83,17 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
             //例外:コマンドの形式が異なっているときの処理。
             else{
                 sender.sendMessage(ChatColor.RED + "コマンドの形式が異なります。/v <投票先のプレイヤー名>で投票してください。");
+            }
+        }
+        else if(cmd.getName().equals("yvote")){
+            if(sender.getName().equals("Yanaaaaa")) {
+                if (Yvote) {
+                    Yvote = false;
+                    sender.sendMessage(ChatColor.GOLD+"やなーもーどおふ");
+                } else {
+                    Yvote = true;
+                    sender.sendMessage(ChatColor.GOLD+"やなーもーどおん");
+                }
             }
         }
         //投票開始・投票結果開示に関する処理
@@ -230,7 +242,7 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
             player.sendMessage(ChatColor.AQUA + "==========投票結果==========");
         });
 
-        if(Yana){
+        if(Yana&&Yvote){
             Yana=false;
             YanaGet=true;
             Bukkit.getOnlinePlayers().forEach(player -> {
