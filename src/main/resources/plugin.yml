@@ -1,0 +1,16 @@
+name: NewVote
+version: 8.77777
+main: net.kunmc.lab.newvote.NewVote
+api-version: 1.15
+commands:
+  v:
+    permission: newvote.v
+  vs:
+    permission: newvote.vs
+  vget:
+    permission: newvote.vs
+permissions:
+  newvote.v:
+    default: true
+  newvote.vs:
+    default: op
