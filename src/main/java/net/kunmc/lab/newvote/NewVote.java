@@ -259,13 +259,13 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
             YanaGet=true;
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendTitle(ChatColor.AQUA+"おや？投票結果の様子が...!?",null,5,60,5);
-                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,100,1);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,30,1);
             });
             new BukkitRunnable(){
                 public void run(){
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         player.sendTitle(ChatColor.GREEN + "やなぱわ～" ,null,5,40,5);
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,100,1);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,30,1);
                     });
                 }
             }.runTaskLater(this,120L);
@@ -274,7 +274,7 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
                     if(Yanum>=0) {
                         Bukkit.getOnlinePlayers().forEach(player -> {
                             player.sendTitle(ChatColor.GREEN + ys+"位: " + ChatColor.WHITE + " Yanaaaaa" + ChatColor.GOLD + " [" + Yanum + "票]", null, 0, 20, 0);
-                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE,100,1);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE,30,1);
                         });
                         Yanum--;
                     }else{
