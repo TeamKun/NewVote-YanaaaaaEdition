@@ -2,6 +2,7 @@ package net.kunmc.lab.newvote;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -37,6 +38,8 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
     public boolean Yana = false;
     static boolean YanaGet=false,Yvote=true;
     public int Yanum ;
+    public int rank=1;
+    public String ys;
 
     @Override
     public  boolean onCommand(CommandSender sender, Command cmd, String Label, String[] args){
@@ -87,13 +90,20 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
         }
         else if(cmd.getName().equals("yvote")){
             if(sender.getName().equals("Yanaaaaa")) {
-                if (Yvote) {
-                    Yvote = false;
-                    sender.sendMessage(ChatColor.GOLD+"やなーもーどおふ");
-                } else {
-                    Yvote = true;
-                    sender.sendMessage(ChatColor.GOLD+"やなーもーどおん");
+                if(args.length==0) {
+                    if (Yvote) {
+                        Yvote = false;
+                        sender.sendMessage(ChatColor.GOLD + "やなーもーどおふ");
+                    } else {
+                        Yvote = true;
+                        sender.sendMessage(ChatColor.GOLD + "やなーもーどおん");
+                    }
+                }else if(args.length==1){
+                    rank = Integer.parseInt(args[0]);
+                    sender.sendMessage(ChatColor.GOLD + "基準を"+args[0]+"位以上にしました");
                 }
+            }else {
+                sender.sendMessage(ChatColor.RED + "権限がありません");
             }
         }
         //投票開始・投票結果開示に関する処理
@@ -228,11 +238,13 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
                 }
             }
             String string = Integer.toString(n);
+            int finalN = n;
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(ChatColor.GREEN + string + "位: " + ChatColor.WHITE+ entry.getKey() + ChatColor.GOLD+" [" + entry.getValue() + "票]");
-                if(entry.getKey().equals("Yanaaaaa")&&string.equals("1")){
+                if(entry.getKey().equals("Yanaaaaa")&& finalN <=rank){
                     Yana=true;
                     Yanum=entry.getValue();
+                    ys=string;
                 }
             });
             num = entry.getValue();
@@ -247,11 +259,13 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
             YanaGet=true;
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendTitle(ChatColor.AQUA+"おや？投票結果の様子が...!?",null,5,60,5);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,100,1);
             });
             new BukkitRunnable(){
                 public void run(){
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         player.sendTitle(ChatColor.GREEN + "やなぱわ～" ,null,5,40,5);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,100,1);
                     });
                 }
             }.runTaskLater(this,120L);
@@ -259,7 +273,8 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
                 public void run(){
                     if(Yanum>=0) {
                         Bukkit.getOnlinePlayers().forEach(player -> {
-                            player.sendTitle(ChatColor.GREEN + "1位: " + ChatColor.WHITE + " Yanaaaaa" + ChatColor.GOLD + " [" + Yanum + "票]", null, 0, 20, 0);
+                            player.sendTitle(ChatColor.GREEN + ys+"位: " + ChatColor.WHITE + " Yanaaaaa" + ChatColor.GOLD + " [" + Yanum + "票]", null, 0, 20, 0);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE,100,1);
                         });
                         Yanum--;
                     }else{
