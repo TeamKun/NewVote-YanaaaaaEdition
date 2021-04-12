@@ -139,7 +139,6 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
                     ScoreBoardLogic.setVoteStatus(2,(Player) sender);
                     List = new ArrayList<>();
                     //投票開始、投票先開示を有効にする
-                    vs = false;vget = true;
                 }
                 }
                 //例外:非OP権限者実行時
@@ -267,6 +266,7 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
                         player.sendTitle(ChatColor.GREEN + "やなぱわ～" ,null,5,40,5);
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,5,1);
                     });
+                    vs = false;vget = true;
                 }
             }.runTaskLater(this,120L);
             new BukkitRunnable(){
@@ -311,6 +311,8 @@ public final class NewVote extends JavaPlugin implements CommandExecutor, TabCom
 
                 }
             }.runTaskTimer(this,200L,15L);
+        }else{
+            vs = false;vget = true;
         }
 
     }
